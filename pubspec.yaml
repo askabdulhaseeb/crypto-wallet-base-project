@@ -16,10 +16,7 @@ dependencies:
   firebase_core: ^1.17.1
   firebase_storage: ^10.2.17
 
-  web3dart:
-  erc20: ^1.0.0
-
-  k_chart: ^0.6.1
+  # k_chart: ^0.6.1
   fl_chart: ^0.55.0
 
   http: ^0.13.4
@@ -33,6 +30,11 @@ dependencies:
 
   introduction_screen: ^3.0.2
   cupertino_icons: ^1.0.2
+  pin_code_fields: ^7.4.0
+
+  extended_image: ^6.3.1
+
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:
