@@ -19,6 +19,7 @@ import 'screens/wallet_screens/create_wallet_screen/create_wallet_screen.dart';
 import 'screens/wallet_screens/import_seed_screen/import_seed_screen.dart';
 import 'screens/wallet_screens/wallet_created_success_screen/wallat_create_success_screen.dart';
 import 'screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
-          home: const IntroScreen(),
+          home: const MainScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),

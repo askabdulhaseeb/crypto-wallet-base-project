@@ -29,7 +29,7 @@ class CoinTile extends StatelessWidget {
             SizedBox(
               height: 50,
               width: 50,
-              child: CustomNetworkImage(imageURL: coin.image),
+              // child: CustomNetworkImage(imageURL: coin.image),
             ),
             // Coin Info
             Padding(

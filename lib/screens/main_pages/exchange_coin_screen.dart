@@ -46,7 +46,7 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                           CoinTextFormField(
                             key: UniqueKey(),
                             controller: exchnagePro.fromController,
-                            coinsList: exchnagePro.fromList(),
+                            coinsList: [],
                             selectedCoin: exchnagePro.from,
                             onChanged: (String? value) =>
                                 exchnagePro.onFromControllerChange(value),
@@ -63,7 +63,7 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                           CoinTextFormField(
                             key: UniqueKey(),
                             controller: exchnagePro.toController,
-                            coinsList: exchnagePro.toList(),
+                            coinsList: [],
                             selectedCoin: exchnagePro.to,
                             onChanged: (String? value) =>
                                 exchnagePro.onToControllerChange(value),

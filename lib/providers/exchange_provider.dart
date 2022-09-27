@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import '../models/swapable_coin.dart';
+import '../utilities/dome_data.dart';
 import '../widget/custom_widgets/custom_toast.dart';
 
 class ExchangeCoinProvider extends ChangeNotifier {
@@ -14,7 +16,7 @@ class ExchangeCoinProvider extends ChangeNotifier {
   final TextEditingController _fromController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
 
-  final List<SwapableCoin> _coins = <SwapableCoin>[];
+  List<SwapableCoin> _coins = <SwapableCoin>[];
 
   double _fromBalance = 0;
   double _swapPrice = 0;
@@ -48,16 +50,6 @@ class ExchangeCoinProvider extends ChangeNotifier {
     if (_coins.isNotEmpty) return true;
     await _load();
     return true;
-  }
-
-  List<SwapableCoin> fromList() {
-    final List<SwapableCoin> list = _coins;
-    return list;
-  }
-
-  List<SwapableCoin> toList() {
-    final List<SwapableCoin> list = _coins;
-    return list;
   }
 
   onFromControllerChange(String? value) async {
@@ -136,8 +128,8 @@ class ExchangeCoinProvider extends ChangeNotifier {
 
   _load() async {
     log('load');
+
     _initCoins();
-    notifyListeners();
   }
 
   _reset() {
@@ -172,7 +164,17 @@ class ExchangeCoinProvider extends ChangeNotifier {
   }
 
   _initCoins() {
-    if (_coins.isEmpty) return;
+    final Map<String, dynamic> data =
+        json.decode(DomeData.listingLatest()) as Map<String, dynamic>;
+    List<dynamic> coinsData = data['coinList'];
+    List<SwapableCoin> coins = <SwapableCoin>[];
+    for (dynamic element in coinsData) {
+      coins.add(SwapableCoin.fromJson(element));
+    }
+    _coins = coins;
+    _from = coins[0];
+    _to = coins[2];
+    if (_coins.isNotEmpty) return;
     if (_from == null) {
       final int fIndex = _coins.indexWhere(
           (SwapableCoin element) => element.symbol.toUpperCase() == 'BNB');

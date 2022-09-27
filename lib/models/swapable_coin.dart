@@ -21,12 +21,12 @@ class SwapableCoin {
   // ignore: sort_constructors_first
   factory SwapableCoin.fromJson(Map<String, dynamic> json) => SwapableCoin(
         id: json['id'],
-        symbol: json['symbol'],
-        name: json['name'],
-        contractAddress: json['contract_address'],
-        testContractAddress: json['test_contract_address'],
-        image: json['image'],
-        createdAt: DateTime.parse(json['created_at']),
-        isActive: json['isActive'],
+        symbol: json['symbol'] ?? 'BNB',
+        name: json['name'] ?? 'null',
+        contractAddress: json['contract_address'] ?? 'null',
+        testContractAddress: json['test_contract_address'] ?? 'null',
+        image: json['image'] ?? '',
+        createdAt: DateTime.parse(json['created_at'] ?? DateTime.now()),
+        isActive: json['isActive'] ?? true,
       );
 }
