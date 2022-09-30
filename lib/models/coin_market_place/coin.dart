@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import '../../utilities/app_images.dart';
 
 class Coin {
   Coin({

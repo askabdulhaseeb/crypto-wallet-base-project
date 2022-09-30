@@ -2,10 +2,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../models/seed_phrase.dart';
+import 'package:bip39/bip39.dart' as bip39;
 
 class SeedPhraseProvider extends ChangeNotifier {
   init() async {
-    _phrases = SeedPhrase(status: true, mnemonic: 'one two three four five six seven eight nine ten eleven twelve');
+    String temp = bip39.generateMnemonic();
+    _phrases = SeedPhrase(status: true, mnemonic: temp);
     _phrasesList.addAll(_phrases!.mnemonic.split(' '));
     Random random = Random();
     _firstIndex = random.nextInt(12);
