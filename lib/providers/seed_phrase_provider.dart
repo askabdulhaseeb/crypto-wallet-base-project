@@ -5,9 +5,13 @@ import '../models/seed_phrase.dart';
 import 'package:bip39/bip39.dart' as bip39;
 
 class SeedPhraseProvider extends ChangeNotifier {
-  init() async {
-    String temp = bip39.generateMnemonic();
-    _phrases = SeedPhrase(status: true, mnemonic: temp);
+  seedPhrase1() {
+    _seedphrase = bip39.generateMnemonic();
+    notifyListeners();
+  }
+
+  init(String value) async {
+    _phrases = SeedPhrase(status: true, mnemonic: value);
     _phrasesList.addAll(_phrases!.mnemonic.split(' '));
     Random random = Random();
     _firstIndex = random.nextInt(12);
@@ -31,9 +35,10 @@ class SeedPhraseProvider extends ChangeNotifier {
   late int _secondIndex;
   late int _thirdIndex;
   late String _firstWord;
+  String _seedphrase = 'asd asd asd asd asd asd asd asd asd asd asd asd';
   late String _secondWord;
   late String _thirdWord;
-
+  String get seedphrase => _seedphrase;
   List<String> get phraselist => _phrasesList;
   String get phrase => _phrases!.mnemonic;
 

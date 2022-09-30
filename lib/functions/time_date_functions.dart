@@ -1,7 +1,7 @@
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
-class TimeDateFunctions {
+class TimeStamp {
   static int get timestamp => DateTime.now().microsecondsSinceEpoch;
 
   static String timeInDigits(int timestamp) {

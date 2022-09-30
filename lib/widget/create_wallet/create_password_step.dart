@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../providers/seed_phrase_provider.dart';
 import '../../utilities/custom_validators.dart';
 import '../../utilities/utilities.dart';
 import '../custom_widgets/custom_elevated_button.dart';
@@ -16,6 +18,8 @@ class CreatePasswordStep extends StatefulWidget {
 }
 
 class _CreatePasswordStepState extends State<CreatePasswordStep> {
+  
+
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();

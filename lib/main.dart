@@ -1,10 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 
+import 'apis/auth_api.dart';
+import 'apis/login_api.dart';
 import 'providers/app_provider.dart';
 import 'providers/app_theme.dart';
 import 'providers/exchange_provider.dart';
 import 'providers/seed_phrase_provider.dart';
+import 'providers/seed_provider.dart';
 import 'providers/user_provider.dart';
 import 'screens/auth/signin_screen.dart';
 import 'screens/auth/signup_screen.dart';
@@ -20,8 +25,10 @@ import 'screens/wallet_screens/import_seed_screen/import_seed_screen.dart';
 import 'screens/wallet_screens/wallet_created_success_screen/wallat_create_success_screen.dart';
 import 'screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await dotenv.load(fileName: '.env');
   runApp(const MyApp());
 }
 
@@ -42,6 +49,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SeedPhraseProvider>.value(
             value: SeedPhraseProvider()),
         ChangeNotifierProvider<UserProvider>.value(value: UserProvider()),
+        ChangeNotifierProvider<SeedProvider>.value(value: SeedProvider()),
       ],
       child: Consumer<AppThemeProvider>(
           builder: (BuildContext context, AppThemeProvider theme, _) {
@@ -51,7 +59,10 @@ class MyApp extends StatelessWidget {
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
-          home: const IntroScreen(),
+          //home: const IntroScreen(),
+          home: AuthApi.uid != null
+              ? const WalletSetupScreen()
+              : const IntroScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),

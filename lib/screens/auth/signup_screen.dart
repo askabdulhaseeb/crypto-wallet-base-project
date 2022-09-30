@@ -1,6 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../apis/auth_api.dart';
+import '../../apis/signup_api.dart';
+import '../../functions/time_date_functions.dart';
+import '../../models/app_user.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../widget/auth/auth_icon_button.dart';
@@ -20,8 +25,27 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _email = TextEditingController();
+  final TextEditingController _name = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
+  final String uuid = const Uuid().v4();
+  SignUp() async {
+    var user = await AuthApi()
+        .signupUser(email: _email.text, password: _password.text);
+    if (user != null) {
+      final AppUser user = AppUser(
+          uid: AuthApi.uid!,
+          name: _name.text,
+          email: _email.text.toLowerCase().trim(),
+          imageURL: ' ');
+      bool temp = await SignupApi().add(user);
+      if (temp) {
+        Navigator.of(context).pushNamed(
+          WalletSetupScreen.routeName,
+        );
+      }
+    }
+  }
 
   bool isLoading = false;
   @override
@@ -53,6 +77,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 const SizedBox(height: 32),
                 CustomTextFormField(
+                  controller: _name,
+                  lable: 'Name',
+                  readOnly: isLoading,
+                  validator: (String? value) =>
+                      CustomValidator.lessThen3(value),
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.done,
+                ),
+                CustomTextFormField(
                   controller: _email,
                   lable: 'Email Address',
                   hint: 'example@example.com',
@@ -73,17 +106,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 isLoading
                     ? const ShowLoading()
                     : CustomElevatedButton(
-                        title: 'Continue with Email',
-                        prefixIcon: const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Icon(Icons.mail, color: Colors.white),
-                        ),
-                        onTap: () async {
-                          if (globalKey.currentState!.validate()) {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                WalletSetupScreen.routeName,
-                                ((Route<dynamic> route) => false));
-                          }
+                        title: 'Signup',
+                        // prefixIcon: const Padding(
+                        //   padding: EdgeInsets.symmetric(horizontal: 10),
+                        //   child: Icon(Icons.mail, color: Colors.white),
+                        // ),
+                        onTap: () {
+                          SignUp();
                         },
                       ),
                 const SizedBox(height: 10),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../providers/seed_phrase_provider.dart';
 import '../../../widget/create_wallet/confirm_seed_step.dart';
 import '../../../widget/create_wallet/create_password_step.dart';
 import '../../../widget/create_wallet/secure_wallet_step.dart';

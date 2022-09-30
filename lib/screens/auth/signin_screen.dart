@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import '../../apis/login_api.dart';
 import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../widget/auth/auth_icon_button.dart';
@@ -24,6 +27,17 @@ class _SigninScreenState extends State<SigninScreen> {
   final TextEditingController _password = TextEditingController();
   final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   bool isLoading = false;
+  signin() async {
+    bool temp =
+        await SignInApi().signin(email: _email.text, password: _password.text);
+    if (temp) {
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushNamed(
+        WalletSetupScreen.routeName,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -73,12 +87,8 @@ class _SigninScreenState extends State<SigninScreen> {
                     ? const ShowLoading()
                     : CustomElevatedButton(
                         title: 'Login',
-                        onTap: () async {
-                          if (globalKey.currentState!.validate()) {
-                            Navigator.of(context).pushNamedAndRemoveUntil(
-                                WalletSetupScreen.routeName,
-                                ((Route<dynamic> route) => false));
-                          }
+                        onTap: () {
+                          signin();
                         },
                       ),
                 const _Footer(),

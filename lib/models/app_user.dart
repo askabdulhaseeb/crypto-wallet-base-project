@@ -5,22 +5,21 @@ class AppUser {
     required this.uid,
     required this.name,
     required this.email,
-    required this.username,
     required this.imageURL,
   });
 
   final String uid;
   final String name;
   final String email;
-  final String username;
+
   final String imageURL;
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      // 'uid': uid,
+      'uid': uid,
       'name': name,
       'email': email,
-      'user_name': username,
+
       // 'imageURL': imageURL,
     };
   }
@@ -31,7 +30,6 @@ class AppUser {
       uid: map['data']['uid'] ?? '',
       name: map['data']['name'] ?? '',
       email: map['data']['email'] ?? '',
-      username: map['data']['user_name'] ?? '',
       imageURL: map['data']['imageURL'] ?? '',
     );
   }

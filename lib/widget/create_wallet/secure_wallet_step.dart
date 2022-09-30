@@ -95,7 +95,7 @@ class _SeedPhrasePageState extends State<_SeedPhrasePage> {
                         SeedTextWidget(text: phrases[4], index: 4),
                         SeedTextWidget(text: phrases[5], index: 5),
                       ],
-                    ),
+                    ),    
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

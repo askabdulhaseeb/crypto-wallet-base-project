@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../Utilities/custom_validators.dart';
+import '../../../providers/seed_provider.dart';
 import '../../../widget/custom_widgets/custom_elevated_button.dart';
+import '../../../widget/custom_widgets/custom_toast.dart';
 import '../../../widget/custom_widgets/hideable_textformfield.dart';
 import '../../../widget/custom_widgets/show_loading.dart';
 import '../../main_screen/main_screen.dart';
@@ -24,6 +27,7 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
   bool signWithFaceID = true;
   @override
   Widget build(BuildContext context) {
+    SeedProvider seedPro = Provider.of<SeedProvider>(context);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -127,9 +131,16 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
                         title: 'Import',
                         readOnly: !(_key.currentState?.validate() ?? false),
                         onTap: () async {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              MainScreen.routeName,
-                              (Route<dynamic> route) => false);
+                          bool temp = seedPro.seedSearch(_seeds.text);
+                          if (temp) {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                MainScreen.routeName,
+                                (Route<dynamic> route) => false);
+                          } else {
+                            CustomToast.successToast(
+                                message: 'Wrong Seed Phrase');
+                            print('Wrong Seed Phrase');
+                          }
                         },
                       ),
               ],

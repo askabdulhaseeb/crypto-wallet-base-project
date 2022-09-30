@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
+import '../../apis/auth_api.dart';
+import '../../apis/seed_phrase_api.dart';
+import '../../apis/wallet_api.dart';
+import '../../functions/time_date_functions.dart';
+import '../../models/seed_string.dart';
+import '../../models/wallets.dart';
 import '../../providers/seed_phrase_provider.dart';
 import '../../screens/auth/welcome_screen.dart';
 import '../../screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
 import '../../utilities/utilities.dart';
+import '../../wallet/wallet.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_toast.dart';
 import '../custom_widgets/gradient_text_widget.dart';
@@ -20,6 +28,30 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
   String _second = '';
   String _third = '';
   int count = 0;
+  final String uuid = const Uuid().v4();
+  uploaddata(String seed) async {
+    final SeedString user =
+        SeedString(seedphrase: seed, userid: AuthApi.uid!, seedid: uuid);
+    bool temp = await SeedPhraseApi().add(user);
+    if (temp) {
+      Map<String, dynamic> walletAddMap = {};
+      walletAddMap = await WallletWithApi().createWallet();
+      Map<String, dynamic> erc20Add =
+          await WallletWithApi().createETherumWallet();
+      walletAddMap.addAll(erc20Add);
+      final Wallets wallets = Wallets(
+          seedid: uuid,
+          userid: AuthApi.uid!,
+          walletAddMap: walletAddMap,
+          walletId: TimeStamp.timestamp.toString());
+      bool temp1 = await WalletsApi().add(wallets);
+      if (temp1) {
+        Navigator.of(context).pushNamedAndRemoveUntil(
+            WelcomeScreen.routeName, (Route<dynamic> route) => false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<SeedPhraseProvider>(
@@ -159,12 +191,8 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
                     _third == seedPro.thirdWord) {
                   // final bool done = await WalletAPI()
                   //     .generatePrivateKey(phrase: seedPro.phrase);
-                  const bool done = true;
-                  if (done) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        WelcomeScreen.routeName,
-                        (Route<dynamic> route) => false);
-                  }
+                  uploaddata(seedPro.seedphrase);
+
                   // else {
                   //   CustomToast.errorToast(
                   //       message: 'Facing issues while fetching info');

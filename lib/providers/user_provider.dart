@@ -6,7 +6,6 @@ class UserProvider extends ChangeNotifier {
   final AppUser _user = AppUser(
     uid: 'null',
     name: 'Test User',
-    username: 'null',
     email: 'test@test.com',
     imageURL: '',
   );
