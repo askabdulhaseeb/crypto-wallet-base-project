@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
-          home: const WelcomeScreen(),
+          home: const MainScreen(),
           // home: AuthApi.uid != null
           //     ? const WalletSetupScreen()
           //     : const IntroScreen(),

@@ -32,7 +32,7 @@ class SeeAllCoinScreen extends StatelessWidget {
               'Markets',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
             ),
-            CoinListView(),
+            Expanded(child: CoinListView()),
           ],
         ),
       ),
