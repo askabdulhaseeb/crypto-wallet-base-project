@@ -7,6 +7,7 @@ import 'apis/auth_api.dart';
 import 'apis/login_api.dart';
 import 'providers/app_provider.dart';
 import 'providers/app_theme.dart';
+import 'providers/coin_provider.dart';
 import 'providers/exchange_provider.dart';
 import 'providers/seed_phrase_provider.dart';
 import 'providers/seed_provider.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AppThemeProvider>.value(
           value: AppThemeProvider(),
         ),
+        ChangeNotifierProvider<CoinProvider>.value(
+          value: CoinProvider(),
+        ),
         ChangeNotifierProvider<ExchangeCoinProvider>.value(
           value: ExchangeCoinProvider(),
         ),
@@ -59,10 +63,10 @@ class MyApp extends StatelessWidget {
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
-          //home: const IntroScreen(),
-          home: AuthApi.uid != null
-              ? const WalletSetupScreen()
-              : const IntroScreen(),
+          home: const WelcomeScreen(),
+          // home: AuthApi.uid != null
+          //     ? const WalletSetupScreen()
+          //     : const IntroScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),

@@ -74,6 +74,6 @@ class TotalBalanceWidget extends StatelessWidget {
     //
     // ignore: always_specify_types
     Future.delayed(const Duration(seconds: 1));
-    return 4300.9;
+    return 3009;
   }
 }
