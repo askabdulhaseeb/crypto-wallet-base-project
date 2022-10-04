@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../Utilities/custom_validators.dart';
+import '../../../providers/balance_provider.dart';
 import '../../../providers/coin_provider.dart';
 import '../../../providers/seed_provider.dart';
 import '../../../providers/wallet_provider.dart';
@@ -31,9 +32,10 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
   @override
   Widget build(BuildContext context) {
     SeedProvider seedPro = Provider.of<SeedProvider>(context);
-    return Consumer3<SeedProvider, WalletProvider, CoinProvider>(builder:
-        (context, SeedProvider seedPro, WalletProvider walletPro,
-            CoinProvider coinPro, _) {
+    return Consumer4<SeedProvider, WalletProvider, CoinProvider,
+            Balanceprovider>(
+        builder: (context, SeedProvider seedPro, WalletProvider walletPro,
+            CoinProvider coinPro, Balanceprovider balancePro, _) {
       return SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
@@ -142,8 +144,9 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
                             if (temp != 'w') {
                               Future<bool> tempbool = walletPro.load(temp);
                               print(walletPro.wallets.length);
-                              coinPro.getAllCoins();
+                              // coinPro.getAllCoins();
                               if (await tempbool == true) {
+                                balancePro.getAllBalance(walletPro);
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     MainScreen.routeName,
                                     (Route<dynamic> route) => false);

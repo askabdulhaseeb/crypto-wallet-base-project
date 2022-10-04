@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
         Provider.of<WalletProvider>(context, listen: false);
     print(walletProvider.wallets.length);
     print(walletProvider.wallets[0].coinsWallet);
+    print(walletProvider.wallets[0].coinsWallet[1].symble);
   }
 
   @override

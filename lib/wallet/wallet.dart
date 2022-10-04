@@ -88,34 +88,23 @@ class WallletWithApi {
   int i = 0;
   @override
   // ignore: always_specify_types
-  Future<Map<String, dynamic>> getWalletBalance(List walletIds) async {
-    Map<String, dynamic> balancesList = {};
-
-    for (String walletId in walletIds) {
-      String uni = walletId.substring(0, 3);
-      String unit = uni == 'dog' ? 'doge' : uni;
-      //print('walletIds $walletId');
+  Future<double> getWalletBalance(String walletIds) async {
+    double temp = 0;  
       try {
         await http
             .get(
                 Uri.parse(
-                  '$url/$walletId/balance',
+                  '$url/$walletIds/balance',
                 ),
                 headers: requestHeaders)
             .then((http.Response value) {
           if (value.statusCode == 200) {
             var body = jsonDecode(value.body);
-            i++;
-
-            // print('body $body');
+     // print('body $body');
             double available = ((body['available']) / 100000000.00);
             double total = ((body['total']) / 100000000.00);
-
-            Map<String, double> balance = {
-              'available': available,
-              'total': total,
-            };
-            balancesList[unit] = (balance['available']);
+             temp=total;
+           
           }
         }).timeout(
           const Duration(seconds: 30),
@@ -123,10 +112,10 @@ class WallletWithApi {
       } catch (e) {
         print(e);
       }
+    return temp;
     }
-    totalBalance = balancesList['btc'];
-    return balancesList;
-  }
+   
+  
 
   Future<CoinsWallet?> createETherumWallet() async {
     try {
