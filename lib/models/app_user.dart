@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class AppUser {
   AppUser({
     required this.uid,
@@ -25,12 +27,12 @@ class AppUser {
   }
 
   // ignore: sort_constructors_first
-  factory AppUser.fromMap(Map<String, dynamic> map) {
+  factory AppUser.fromMap(DocumentSnapshot<Map<String, dynamic>> doc) {
     return AppUser(
-      uid: map['data']['uid'] ?? '',
-      name: map['data']['name'] ?? '',
-      email: map['data']['email'] ?? '',
-      imageURL: map['data']['imageURL'] ?? '',
+      uid: doc.data()?['uid'] ?? '',
+      name: doc.data()?['name'] ?? '',
+      email: doc.data()?['email'] ?? '',
+      imageURL: doc.data()?['imageURL'] ?? '',
     );
   }
 
