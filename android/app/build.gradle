@@ -28,7 +28,6 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
 android {
-    // compileSdkVersion flutter.compileSdkVersion
     compileSdkVersion 32
     ndkVersion flutter.ndkVersion
 
@@ -72,5 +71,5 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
-    
+
 }

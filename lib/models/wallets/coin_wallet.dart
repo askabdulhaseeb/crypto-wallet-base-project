@@ -12,13 +12,14 @@ class CoinsWallet {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'symble': symble,
+      'symble': symble.trim().toLowerCase(),
       'address': address,
       'transfer_key': transferKey,
       'wallet': wallet,
     };
   }
 
+  // ignore: sort_constructors_first
   factory CoinsWallet.fromMap(Map<String, dynamic> map) {
     return CoinsWallet(
       symble: map['symble'] as String,
