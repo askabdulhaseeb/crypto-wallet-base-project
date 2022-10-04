@@ -11,6 +11,7 @@ import '../../../widget/custom_widgets/custom_toast.dart';
 import '../../../widget/custom_widgets/hideable_textformfield.dart';
 import '../../../widget/custom_widgets/show_loading.dart';
 import '../../main_screen/main_screen.dart';
+import '../wallet_setup_screen/wallet_setup_screen.dart';
 
 class ImportSeedScreen extends StatefulWidget {
   const ImportSeedScreen({Key? key}) : super(key: key);
@@ -148,9 +149,11 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
                                     (Route<dynamic> route) => false);
                               }
                             } else {
-                              CustomToast.successToast(
-                                  message: 'Wrong Seed Phrase');
-                              print('Wrong Seed Phrase');
+                              CustomToast.errorToast(
+                                  message: 'Invalid Seed Phrase Enterd');
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  WalletSetupScreen.routeName,
+                                  (Route<dynamic> route) => false);
                             }
                           },
                         ),
