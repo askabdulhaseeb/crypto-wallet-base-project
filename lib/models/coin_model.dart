@@ -14,5 +14,5 @@ class CoinData {
   final double price;
   final double daypercentage;
   final double weekpercentage;
-  final int marketcaprank;
+  final double marketcaprank;
 }

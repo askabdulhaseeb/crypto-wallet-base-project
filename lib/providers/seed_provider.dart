@@ -32,11 +32,11 @@ class SeedProvider with ChangeNotifier {
   //   }
   //   return temp;
   // }
-  bool seedSearch(String value) {
-    bool temp = false;
+  String seedSearch(String value) {
+    String temp = 'w';
     for (SeedString element in _seed) {
       if (value == element.seedphrase) {
-        temp = true;
+        temp = element.seedid;
       }
     }
     return temp;

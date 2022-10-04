@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
+import '../../providers/wallet_provider.dart';
 import '../../widget/coin_list_view.dart';
 import '../../widget/custom_widgets/circular_profile_image.dart';
 import '../../widget/home/total_balance_widget.dart';
@@ -25,42 +26,18 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    getPrice();
+    showWalletID();
+    // getPrice();
     // Timer.periodic(Duration(seconds: 15), (timer) {
     //   getPrice();
     // });
   }
 
-  getPrice() async {
-    CoinProvider coinPro = Provider.of<CoinProvider>(context, listen: false);
-    try {
-      coinPro.coins.clear();
-      String temp;
-      String url = 'https://api.coingecko.com/api/v3/coins';
-      var response = await http.get(Uri.parse(url));
-      var json = jsonDecode(response.body);
-      for (int i = 0; i < json.length; i++) {
-        CoinData coinData = CoinData(
-          name: json[i]['name'] ?? '',
-          daypercentage:
-              json[i]['market_data']['price_change_percentage_24h'] ?? 0,
-          imageurl: json[i]['image']['small'] ?? '',
-          marketcaprank: json[i]['market_data']['market_cap_rank'] ?? 0,
-          price: json[i]['market_data']['current_price']['usd'] ?? 0,
-          symbol: json[i]['symbol'] ?? '',
-          weekpercentage:
-              json[i]['market_data']['price_change_percentage_7d'] ?? 0,
-        );
-        coinPro.getAllCoins(coinData);
-      }
-      print('data loaded');
-
-      //temp = json.toString();
-
-      //var value = json['market_data']['current_price']['usd'].toString();
-    } catch (e) {
-      //print(e.toString());
-    }
+  showWalletID() {
+    WalletProvider walletProvider =
+        Provider.of<WalletProvider>(context, listen: false);
+    print(walletProvider.wallets.length);
+    print(walletProvider.wallets[0].coinsWallet);
   }
 
   @override

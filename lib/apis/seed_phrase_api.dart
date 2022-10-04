@@ -34,6 +34,7 @@ class SeedPhraseApi {
 //   }
 // }
   Future<List<SeedString>> get() async {
+    // ignore: always_specify_types
     List<SeedString> temp = [];
 
     QuerySnapshot<Map<String, dynamic>> snapshot = await _instance

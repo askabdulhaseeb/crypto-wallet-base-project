@@ -12,6 +12,7 @@ import 'providers/exchange_provider.dart';
 import 'providers/seed_phrase_provider.dart';
 import 'providers/seed_provider.dart';
 import 'providers/user_provider.dart';
+import 'providers/wallet_provider.dart';
 import 'screens/auth/signin_screen.dart';
 import 'screens/auth/signup_screen.dart';
 import 'screens/auth/verification_pin_screen.dart';
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SeedPhraseProvider>.value(
             value: SeedPhraseProvider()),
         ChangeNotifierProvider<UserProvider>.value(value: UserProvider()),
+         ChangeNotifierProvider<WalletProvider>.value(value: WalletProvider()),
         ChangeNotifierProvider<SeedProvider>.value(value: SeedProvider()),
       ],
       child: Consumer<AppThemeProvider>(

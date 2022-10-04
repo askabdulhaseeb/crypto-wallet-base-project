@@ -19,4 +19,23 @@ class WalletsApi {
       return false;
     }
   }
+
+  Future<List<Wallets>> get(String seedid) async {
+    print('data get chal para ha');
+    print(seedid);
+    List<Wallets> coinsWallet = <Wallets>[];
+    try {
+      QuerySnapshot<Map<String, dynamic>> snapshot = await _instance
+          .collection(_collection)
+          .where('seed_id', isEqualTo: seedid)
+          .get();
+      for (DocumentSnapshot<Map<String, dynamic>> e in snapshot.docs) {
+        coinsWallet.add(Wallets.fromMap(e));
+      }
+      CustomToast.successToast(message: 'Success');
+    } catch (e) {
+      CustomToast.errorToast(message: e.toString());
+    }
+    return coinsWallet;
+  }
 }
