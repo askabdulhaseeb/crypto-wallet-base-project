@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../models/wallets.dart';
+import '../models/wallets/wallets.dart';
 import '../widget/custom_widgets/custom_toast.dart';
 
 class WalletsApi {

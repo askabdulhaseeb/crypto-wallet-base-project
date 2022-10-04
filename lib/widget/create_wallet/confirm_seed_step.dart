@@ -7,7 +7,8 @@ import '../../apis/seed_phrase_api.dart';
 import '../../apis/wallet_api.dart';
 import '../../functions/time_date_functions.dart';
 import '../../models/seed_string.dart';
-import '../../models/wallets.dart';
+import '../../models/wallets/coin_wallet.dart';
+import '../../models/wallets/wallets.dart';
 import '../../providers/seed_phrase_provider.dart';
 import '../../screens/auth/welcome_screen.dart';
 import '../../screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
@@ -34,16 +35,17 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
         SeedString(seedphrase: seed, userid: AuthApi.uid!, seedid: uuid);
     bool temp = await SeedPhraseApi().add(user);
     if (temp) {
-      Map<String, dynamic> walletAddMap = {};
-      walletAddMap = await WallletWithApi().createWallet();
-      Map<String, dynamic> erc20Add =
+      List<CoinsWallet> coinsWallet = await WallletWithApi().createWallet();
+      final CoinsWallet? erc20Add =
           await WallletWithApi().createETherumWallet();
-      walletAddMap.addAll(erc20Add);
+      if (erc20Add == null) return;
+      coinsWallet.add(erc20Add);
       final Wallets wallets = Wallets(
-          seedid: uuid,
-          userid: AuthApi.uid!,
-          walletAddMap: walletAddMap,
-          walletId: TimeStamp.timestamp.toString());
+        seedid: uuid,
+        uid: AuthApi.uid!,
+        coinsWallet: coinsWallet,
+        walletId: TimeStamp.timestamp.toString(),
+      );
       bool temp1 = await WalletsApi().add(wallets);
       if (temp1) {
         Navigator.of(context).pushNamedAndRemoveUntil(
