@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/balance_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/wallet_provider.dart';
 import '../../widget/coin_list_view.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   showWalletID() {
     WalletProvider walletProvider =
         Provider.of<WalletProvider>(context, listen: false);
+
     print(walletProvider.wallets.length);
     print(walletProvider.wallets[0].coinsWallet);
     print(walletProvider.wallets[0].coinsWallet[1].symble);

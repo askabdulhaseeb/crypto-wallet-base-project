@@ -146,7 +146,7 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
                               print(walletPro.wallets.length);
                               // coinPro.getAllCoins();
                               if (await tempbool == true) {
-                                balancePro.getAllBalance(walletPro);
+                                balancePro.getAllBalance(walletPro,coinPro);
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     MainScreen.routeName,
                                     (Route<dynamic> route) => false);
