@@ -55,9 +55,16 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SeedPhraseProvider>.value(
             value: SeedPhraseProvider()),
         ChangeNotifierProvider<UserProvider>.value(value: UserProvider()),
-         ChangeNotifierProvider<WalletProvider>.value(value: WalletProvider()),
+        ChangeNotifierProvider<WalletProvider>.value(value: WalletProvider()),
         ChangeNotifierProvider<SeedProvider>.value(value: SeedProvider()),
-        ChangeNotifierProvider<Balanceprovider>.value(value: Balanceprovider()),
+        //ChangeNotifierProvider<Balanceprovider>.value(value: Balanceprovider()),
+        ChangeNotifierProxyProvider2<CoinProvider, WalletProvider,
+            Balanceprovider>(
+          create: (BuildContext context) => Balanceprovider(),
+          update: (BuildContext ctx, CoinProvider coinPro,
+                  WalletProvider walletPro, Balanceprovider? balancePro) =>
+              balancePro!..refresh(coinPro, walletPro),
+        )
       ],
       child: Consumer<AppThemeProvider>(
           builder: (BuildContext context, AppThemeProvider theme, _) {
@@ -68,9 +75,7 @@ class MyApp extends StatelessWidget {
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
           //home: const MainScreen(),
-          home: AuthApi.uid != null
-              ? const WalletSetupScreen()
-              : const IntroScreen(),
+          home: AuthApi.uid != null ? const MainScreen() : const IntroScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),

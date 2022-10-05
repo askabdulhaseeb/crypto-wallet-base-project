@@ -48,7 +48,7 @@ class HistoryPage extends StatelessWidget {
                 ),
               ],
             ),
-            const CoinListView(),
+            const Expanded(child:  CoinListView()),
           ],
         ),
       ),

@@ -66,7 +66,7 @@ class CoinScreen extends StatelessWidget {
                 ],
               ),
             ),
-            const CoinListView(),
+            Expanded(child: const CoinListView()),
           ],
         ),
       ),

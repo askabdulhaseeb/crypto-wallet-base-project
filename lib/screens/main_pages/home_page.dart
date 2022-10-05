@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/balance_provider.dart';
+import '../../providers/coin_provider.dart';
 import '../../providers/user_provider.dart';
 import '../../providers/wallet_provider.dart';
 import '../../widget/coin_list_view.dart';
@@ -10,11 +11,6 @@ import '../../widget/custom_widgets/circular_profile_image.dart';
 import '../../widget/home/total_balance_widget.dart';
 import '../see_all_coin_screen/see_all_coin_screen.dart';
 import '../tranfer_screens/receive_btc_screen.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import '../../models/coin_model.dart';
-import '../../providers/coin_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,20 +23,26 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    showWalletID();
+    // showWalletID();
     // getPrice();
     // Timer.periodic(Duration(seconds: 15), (timer) {
     //   getPrice();
     // });
   }
 
-  showWalletID() {
+  showWalletID() async {
     WalletProvider walletProvider =
         Provider.of<WalletProvider>(context, listen: false);
-
+    CoinProvider coinpro = Provider.of<CoinProvider>(context, listen: false);
+    Balanceprovider balancepro =
+        Provider.of<Balanceprovider>(context, listen: false);
+    if (walletProvider.wallets.length == 1 && coinpro.coins.length == 50) {
+      balancepro.getAllBalance(walletProvider, coinpro);
+    }
+    print('usman');
     print(walletProvider.wallets.length);
-    print(walletProvider.wallets[0].coinsWallet);
-    print(walletProvider.wallets[0].coinsWallet[1].symble);
+    //print(walletProvider.wallets[0].coinsWallet);
+    //print(walletProvider.wallets[0].coinsWallet[1].symble);
   }
 
   @override
