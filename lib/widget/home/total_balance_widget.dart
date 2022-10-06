@@ -43,7 +43,7 @@ class TotalBalanceWidget extends StatelessWidget {
                 ),
               ],
             ),
-            Text('\$${balancePro.totalBalanceShow().toString()}'),
+            Text('\$${balancePro.total.toStringAsFixed(2).toString()}'),
             // FutureBuilder<double>(
             //   future: fakeBalace(),
             //   builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
