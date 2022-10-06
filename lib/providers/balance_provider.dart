@@ -23,30 +23,41 @@ class Balanceprovider with ChangeNotifier {
 
   updateYourCoin(WalletProvider walletProvider, CoinProvider coinPro) async {
     wallet.clear();
+    List<int> temp = coinApiIndex(coinPro);
     for (int i = 0; i < 4; i++) {
-      int tempindex = i == 0
-          ? 0
-          : i == 1
-              ? 9
-              : i == 2
-                  ? 31
-                  : i == 3
-                      ? 21
-                      : 0;
-      print(coinPro.coins[tempindex].name);
+      print(coinPro.coins[temp[i]].name);
       WalletBalnce walletbal = WalletBalnce(
-        name: coinPro.coins[tempindex].name,
+        name: coinPro.coins[temp[i]].name,
         // totalcoin: await WallletWithApi().getWalletBalance(
         //   walletProvider.wallets[0].coinsWallet[0].address),
         totalcoin: 1,
         address: walletProvider.wallets[0].coinsWallet[i].address,
         transferkey: walletProvider.wallets[0].coinsWallet[i].transferKey,
         wallet: walletProvider.wallets[0].coinsWallet[i].wallet,
-        coinImage: coinPro.coins[tempindex].imageurl,
-        price: coinPro.coins[tempindex].price,
+        coinImage: coinPro.coins[temp[i]].imageurl,
+        price: coinPro.coins[temp[i]].price,
       );
       _wallet.add(walletbal);
     }
+  }
+
+  List<int> coinApiIndex(CoinProvider coinPro) {
+    List<int> temp = [];
+    for (int i = 0; i < 50; i++) {
+      if (coinPro.coins[i].symbol == 'btc') {
+        temp.add(i);
+      }
+      if (coinPro.coins[i].symbol == 'doge') {
+        temp.add(i);
+      }
+      if (coinPro.coins[i].symbol == 'bch') {
+        temp.add(i);
+      }
+      if (coinPro.coins[i].symbol == 'ltc') {
+        temp.add(i);
+      }
+    }
+    return temp;
   }
 
   getAllBalance(WalletProvider walletProvider, CoinProvider coinPro) async {
