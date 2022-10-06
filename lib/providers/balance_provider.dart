@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/wallets/balance.dart';
 import '../wallet/wallet.dart';
 import 'coin_provider.dart';
 import 'wallet_provider.dart';
@@ -10,11 +11,42 @@ class Balanceprovider with ChangeNotifier {
   double bchbalance = 10;
   double ltcbalance = 10;
   double get total => totalBalnce;
+  List<WalletBalnce> _wallet = <WalletBalnce>[];
+  List<WalletBalnce> get wallet => _wallet;
   void refresh(CoinProvider coinPro, WalletProvider walletPro) {
     if (walletPro.wallets.length == 1 && coinPro.coins.length == 50) {
+      updateYourCoin(walletPro, coinPro);
       getAllBalance(walletPro, coinPro);
     }
     notifyListeners();
+  }
+
+  updateYourCoin(WalletProvider walletProvider, CoinProvider coinPro) async {
+    wallet.clear();
+    for (int i = 0; i < 4; i++) {
+      int tempindex = i == 0
+          ? 0
+          : i == 1
+              ? 9
+              : i == 2
+                  ? 31
+                  : i == 3
+                      ? 21
+                      : 0;
+      print(coinPro.coins[tempindex].name);
+      WalletBalnce walletbal = WalletBalnce(
+        name: coinPro.coins[tempindex].name,
+        // totalcoin: await WallletWithApi().getWalletBalance(
+        //   walletProvider.wallets[0].coinsWallet[0].address),
+        totalcoin: 1,
+        address: walletProvider.wallets[0].coinsWallet[i].address,
+        transferkey: walletProvider.wallets[0].coinsWallet[i].transferKey,
+        wallet: walletProvider.wallets[0].coinsWallet[i].wallet,
+        coinImage: coinPro.coins[tempindex].imageurl,
+        price: coinPro.coins[tempindex].price,
+      );
+      _wallet.add(walletbal);
+    }
   }
 
   getAllBalance(WalletProvider walletProvider, CoinProvider coinPro) async {
@@ -39,7 +71,7 @@ class Balanceprovider with ChangeNotifier {
     ltcbalance = 1 * coinPro.coins[20].price;
     totalBalanceShow();
   }
-       
+
   totalBalanceShow() {
     totalBalnce = bchbalance + btcbalance + dogebalance + ltcbalance;
     notifyListeners();

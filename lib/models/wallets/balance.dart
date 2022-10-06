@@ -1,12 +1,19 @@
 class WalletBalnce {
-  WalletBalnce(
-      {required this.btcBalance,
-      required this.dogeBalance,
-      required this.bchBalance,
-      required this.ethBalance});
+  WalletBalnce({
+    required this.name,
+    required this.totalcoin,
+    required this.address,
+    required this.transferkey,
+    required this.wallet,
+    required this.coinImage,
+    required this.price,
+  });
 
-  final double btcBalance;
-  final double dogeBalance;
-  final double bchBalance;
-  final double ethBalance;
+  final String name;
+  final double totalcoin;
+  final String address;
+  final String transferkey;
+  final String wallet;
+  final String coinImage;
+  final double price;
 }
