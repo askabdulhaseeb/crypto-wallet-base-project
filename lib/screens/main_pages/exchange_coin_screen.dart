@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/swapable_coin.dart';
+import '../../models/wallets/balance.dart';
+import '../../providers/balance_provider.dart';
 import '../../providers/exchange_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../widget/coin/coin_textformfield.dart';
@@ -28,15 +30,14 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: FutureBuilder<bool>(
-              future: Provider.of<ExchangeCoinProvider>(context, listen: false)
-                  .init(),
+              future:
+                  Provider.of<Balanceprovider>(context, listen: false).init(),
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (snapshot.hasError) {
                   return Center(child: Text('Facing Error\n${snapshot.error}'));
                 } else if (snapshot.hasData) {
-                  return Consumer<ExchangeCoinProvider>(builder:
-                      (BuildContext context, ExchangeCoinProvider exchnagePro,
-                          _) {
+                  return Consumer<Balanceprovider>(builder:
+                      (BuildContext context, Balanceprovider exchnagePro, _) {
                     return Form(
                       key: _key,
                       child: Column(
@@ -46,11 +47,11 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                           CoinTextFormField(
                             key: UniqueKey(),
                             controller: exchnagePro.fromController,
-                            coinsList: [],
+                            coinsList: exchnagePro.wallet,
                             selectedCoin: exchnagePro.from,
                             onChanged: (String? value) =>
                                 exchnagePro.onFromControllerChange(value),
-                            onCoinSelection: (SwapableCoin? value) =>
+                            onCoinSelection: (WalletBalnce? value) =>
                                 exchnagePro.onFromCoinChange(value),
                             validator: (String? value) =>
                                 exchnagePro.fromValidator(value),
@@ -63,11 +64,11 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                           CoinTextFormField(
                             key: UniqueKey(),
                             controller: exchnagePro.toController,
-                            coinsList: [],
+                            coinsList: exchnagePro.wallet,
                             selectedCoin: exchnagePro.to,
                             onChanged: (String? value) =>
                                 exchnagePro.onToControllerChange(value),
-                            onCoinSelection: (SwapableCoin? value) =>
+                            onCoinSelection: (WalletBalnce? value) =>
                                 exchnagePro.onToCoinChange(value),
                             validator: (String? value) => null,
                           ),

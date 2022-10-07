@@ -74,7 +74,8 @@ class ExchangeCoinProvider extends ChangeNotifier {
     _from = value;
     _initCoins();
     onFromControllerChange(_fromController.text);
-    log('start');
+    log('start'); // result -> API
+    // _to = result ;
   }
 
   onToCoinChange(SwapableCoin? value) {

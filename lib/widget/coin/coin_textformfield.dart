@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../models/swapable_coin.dart';
+import '../../models/wallets/balance.dart';
 
 class CoinTextFormField extends StatefulWidget {
   const CoinTextFormField({
@@ -12,11 +13,11 @@ class CoinTextFormField extends StatefulWidget {
     required this.validator,
     Key? key,
   }) : super(key: key);
-  final List<SwapableCoin> coinsList;
-  final void Function(SwapableCoin?)? onCoinSelection;
+  final List<WalletBalnce> coinsList;
+  final void Function(WalletBalnce?)? onCoinSelection;
   final String? Function(String? value)? validator;
   final void Function(String)? onChanged;
-  final SwapableCoin? selectedCoin;
+  final WalletBalnce? selectedCoin;
   final TextEditingController controller;
 
   @override
@@ -63,7 +64,7 @@ class _CoinTextFormFieldState extends State<CoinTextFormField> {
               ),
             ),
           ),
-          DropdownButton<SwapableCoin>(
+          DropdownButton<WalletBalnce>(
             value: widget.selectedCoin,
             style: const TextStyle(color: Colors.black),
             underline: const SizedBox(),
@@ -72,10 +73,10 @@ class _CoinTextFormFieldState extends State<CoinTextFormField> {
               style: TextStyle(color: Colors.black),
             ),
             items: widget.coinsList
-                .map((SwapableCoin coin) => DropdownMenuItem<SwapableCoin>(
+                .map((WalletBalnce coin) => DropdownMenuItem<WalletBalnce>(
                       value: coin,
                       child: Text(
-                        coin.symbol.toUpperCase(),
+                        coin.name.toUpperCase(),
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ))
