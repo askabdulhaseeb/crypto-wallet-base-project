@@ -30,20 +30,20 @@ class _HomePageState extends State<HomePage> {
     // });
   }
 
-  showWalletID() async {
-    WalletProvider walletProvider =
-        Provider.of<WalletProvider>(context, listen: false);
-    CoinProvider coinpro = Provider.of<CoinProvider>(context, listen: false);
-    Balanceprovider balancepro =
-        Provider.of<Balanceprovider>(context, listen: false);
-    if (walletProvider.wallets.length == 1 && coinpro.coins.length == 50) {
-      balancepro.getAllBalance(walletProvider, coinpro);
-    }
-    print('usman');
-    print(walletProvider.wallets.length);
-    //print(walletProvider.wallets[0].coinsWallet);
-    //print(walletProvider.wallets[0].coinsWallet[1].symble);
-  }
+  // showWalletID() async {
+  //   WalletProvider walletProvider =
+  //       Provider.of<WalletProvider>(context, listen: false);
+  //   CoinProvider coinpro = Provider.of<CoinProvider>(context, listen: false);
+  //   Balanceprovider balancepro =
+  //       Provider.of<Balanceprovider>(context, listen: false);
+  //   if (walletProvider.wallets.length == 1 && coinpro.coins.length == 50) {
+  //     balancepro.getAllBalance(walletProvider, coinpro);
+  //   }
+  //   print('usman');
+  //   print(walletProvider.wallets.length);
+  //   //print(walletProvider.wallets[0].coinsWallet);
+  //   //print(walletProvider.wallets[0].coinsWallet[1].symble);
+  // }
 
   @override
   Widget build(BuildContext context) {

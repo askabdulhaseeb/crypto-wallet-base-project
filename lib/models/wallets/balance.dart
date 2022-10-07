@@ -7,6 +7,7 @@ class WalletBalnce {
     required this.wallet,
     required this.coinImage,
     required this.price,
+    required this.usdtPrice,
   });
 
   final String name;
@@ -16,4 +17,5 @@ class WalletBalnce {
   final String wallet;
   final String coinImage;
   final double price;
+  final double usdtPrice;
 }

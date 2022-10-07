@@ -26,104 +26,178 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Exchange')),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: FutureBuilder<bool>(
-              future:
-                  Provider.of<Balanceprovider>(context, listen: false).init(),
-              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                if (snapshot.hasError) {
-                  return Center(child: Text('Facing Error\n${snapshot.error}'));
-                } else if (snapshot.hasData) {
-                  return Consumer<Balanceprovider>(builder:
-                      (BuildContext context, Balanceprovider exchnagePro, _) {
-                    return Form(
-                      key: _key,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          const SizedBox(height: 32),
-                          CoinTextFormField(
-                            key: UniqueKey(),
-                            controller: exchnagePro.fromController,
-                            coinsList: exchnagePro.wallet,
-                            selectedCoin: exchnagePro.from,
-                            onChanged: (String? value) =>
-                                exchnagePro.onFromControllerChange(value),
-                            onCoinSelection: (WalletBalnce? value) =>
-                                exchnagePro.onFromCoinChange(value),
-                            validator: (String? value) =>
-                                exchnagePro.fromValidator(value),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Coin Balance: ${exchnagePro.fromCoinBalance}',
-                          ),
-                          const _DividerWidger(),
-                          CoinTextFormField(
-                            key: UniqueKey(),
-                            controller: exchnagePro.toController,
-                            coinsList: exchnagePro.wallet,
-                            selectedCoin: exchnagePro.to,
-                            onChanged: (String? value) =>
-                                exchnagePro.onToControllerChange(value),
-                            onCoinSelection: (WalletBalnce? value) =>
-                                exchnagePro.onToCoinChange(value),
-                            validator: (String? value) => null,
-                          ),
-                          const SizedBox(height: 32),
-                          _Charges(
-                            title: 'Swap Price: ',
-                            subtitle: exchnagePro.swapPrice.toString(),
-                          ),
-                          _Charges(
-                            title: 'Price Impect: ',
-                            subtitle: '${exchnagePro.priceImpact}%',
-                            subtitleStyle: TextStyle(
-                              color: exchnagePro.priceImpact < 15
-                                  ? Colors.green
-                                  : Colors.red,
-                            ),
-                          ),
-                          isLoading
-                              ? const ShowLoading()
-                              : CustomElevatedButton(
-                                  title: 'Exchange',
-                                  onTap: () async {
-                                    if (_key.currentState!.validate()) {
-                                      if (exchnagePro.priceImpact < 15) {
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        await exchnagePro.exhcange();
-                                        setState(() {
-                                          isLoading = false;
-                                        });
-                                      } else {
-                                        CustomToast.errorToast(
-                                          message: 'Price impect is too high',
-                                        );
-                                      }
-                                    }
-                                  },
-                                ),
-                          const SizedBox(height: 16),
-                          Text(
-                            exchnagePro.error,
-                            style: const TextStyle(color: Colors.red),
-                          ),
-                        ],
+      body: Consumer<Balanceprovider>(
+          builder: (BuildContext context, Balanceprovider balancePro, _) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Column(
+            children: [
+              Container(
+                height: 70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyText1!
+                        .color!
+                        .withOpacity(0.5),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: TextFormField(
+                      decoration: const InputDecoration(
+                        hintText: '0',
+                        prefix: Text('\$'),
+                        border: InputBorder.none,
                       ),
-                    );
-                  });
-                } else {
-                  return const ShowLoading();
-                }
-              }),
-        ),
-      ),
+                      controller: balancePro.fromController,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: true),
+                    )),
+                    DropdownButton(
+                        value: balancePro.from,
+                        style: const TextStyle(color: Colors.white),
+                        underline: const SizedBox(),
+                        hint: const Text(
+                          'Select coin',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        items: balancePro.wallet
+                            .map((WalletBalnce coin) =>
+                                DropdownMenuItem<WalletBalnce>(
+                                  value: coin,
+                                  child: Text(
+                                    coin.name.toUpperCase(),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ))
+                            .toList(),
+                        onChanged: (WalletBalnce? value) =>
+                            balancePro.formValueChange(value!))
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                      'Avaliable ${balancePro.from.name} :  \$ ${balancePro.from.usdtPrice}'),
+                  Text('${balancePro.from.name} : 0'),
+                ],
+              ),
+            ],
+          ),
+        );
+      }),
     );
+
+    // return Scaffold(
+    //   appBar: AppBar(title: const Text('Exchange')),
+    //   body: SingleChildScrollView(
+    //     child: Padding(
+    //       padding: const EdgeInsets.symmetric(horizontal: 16),
+    //       // child:FutureBuilder<bool>(
+    //       //     future:
+    //       //         Provider.of<Balanceprovider>(context, listen: false).init(),
+    //       //     builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+    //       //       if (snapshot.hasError) {
+    //       //         return Center(child: Text('Facing Error\n${snapshot.error}'));
+    //       //       } else if (snapshot.hasData) {
+    //       //         return Consumer<Balanceprovider>(builder:
+    //       //             (BuildContext context, Balanceprovider exchnagePro, _) {
+    //       //           return Form(
+    //       //             key: _key,
+    //       //             child: Column(
+    //       //               crossAxisAlignment: CrossAxisAlignment.start,
+    //       //               children: <Widget>[
+    //       //                 const SizedBox(height: 32),
+    //       //                 CoinTextFormField(
+    //       //                   key: UniqueKey(),
+    //       //                   controller: exchnagePro.fromController,
+    //       //                   coinsList: exchnagePro.wallet,
+    //       //                   selectedCoin: exchnagePro.from,
+    //       //                   onChanged: (String? value) =>
+    //       //                       exchnagePro.onFromControllerChange(value),
+    //       //                   onCoinSelection: (WalletBalnce? value) =>
+    //       //                       exchnagePro.onFromCoinChange(value),
+    //       //                   validator: (String? value) =>
+    //       //                       exchnagePro.fromValidator(value),
+    //       //                 ),
+    //       //                 const SizedBox(height: 10),
+    //       //                 Text(
+    //       //                   'Coin Balance: ${exchnagePro.fromCoinBalance}',
+    //       //                 ),
+    //       //                 const _DividerWidger(),
+    //       //                 CoinTextFormField(
+    //       //                   key: UniqueKey(),
+    //       //                   controller: exchnagePro.toController,
+    //       //                   coinsList: exchnagePro.wallet,
+    //       //                   selectedCoin: exchnagePro.to,
+    //       //                   onChanged: (String? value) =>
+    //       //                       exchnagePro.onToControllerChange(value),
+    //       //                   onCoinSelection: (WalletBalnce? value) =>
+    //       //                       exchnagePro.onToCoinChange(value),
+    //       //                   validator: (String? value) => null,
+    //       //                 ),
+    //       //                 const SizedBox(height: 32),
+    //       //                 _Charges(
+    //       //                   title: 'Swap Price: ',
+    //       //                   subtitle: exchnagePro.swapPrice.toString(),
+    //       //                 ),
+    //       //                 _Charges(
+    //       //                   title: 'Price Impect: ',
+    //       //                   subtitle: '${exchnagePro.priceImpact}%',
+    //       //                   subtitleStyle: TextStyle(
+    //       //                     color: exchnagePro.priceImpact < 15
+    //       //                         ? Colors.green
+    //       //                         : Colors.red,
+    //       //                   ),
+    //       //                 ),
+    //       //                 isLoading
+    //       //                     ? const ShowLoading()
+    //       //                     : CustomElevatedButton(
+    //       //                         title: 'Exchange',
+    //       //                         onTap: () async {
+    //       //                           if (_key.currentState!.validate()) {
+    //       //                             if (exchnagePro.priceImpact < 15) {
+    //       //                               setState(() {
+    //       //                                 isLoading = true;
+    //       //                               });
+    //       //                               await exchnagePro.exhcange();
+    //       //                               setState(() {
+    //       //                                 isLoading = false;
+    //       //                               });
+    //       //                             } else {
+    //       //                               CustomToast.errorToast(
+    //       //                                 message: 'Price impect is too high',
+    //       //                               );
+    //       //                             }
+    //       //                           }
+    //       //                         },
+    //       //                       ),
+    //       //                 const SizedBox(height: 16),
+    //       //                 Text(
+    //       //                   exchnagePro.error,
+    //       //                   style: const TextStyle(color: Colors.red),
+    //       //                 ),
+    //       //               ],
+    //       //             ),
+    //       //           );
+    //       //         });
+    //       //       } else {
+    //       //         return const ShowLoading();
+    //       //       }
+    //       //     }),
+    //     ),
+    //   ),
+    // );
   }
 }
 
