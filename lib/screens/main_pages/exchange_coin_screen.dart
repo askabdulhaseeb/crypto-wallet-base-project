@@ -32,58 +32,8 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             children: [
-              Container(
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodyText1!
-                        .color!
-                        .withOpacity(0.5),
-                  ),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        prefix: Text('\$'),
-                        border: InputBorder.none,
-                      ),
-                      controller: balancePro.fromController,
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
-                    )),
-                    DropdownButton(
-                        value: balancePro.from,
-                        style: const TextStyle(color: Colors.white),
-                        underline: const SizedBox(),
-                        hint: const Text(
-                          'Select coin',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                        items: balancePro.wallet
-                            .map((WalletBalnce coin) =>
-                                DropdownMenuItem<WalletBalnce>(
-                                  value: coin,
-                                  child: Text(
-                                    coin.name.toUpperCase(),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ))
-                            .toList(),
-                        onChanged: (WalletBalnce? value) =>
-                            balancePro.formValueChange(value!))
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              fromSwap(context, balancePro),
+              const SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -92,6 +42,9 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                   Text('${balancePro.from.name} : 0'),
                 ],
               ),
+              const _DividerWidger(),
+              const SizedBox(height: 10),
+              toSwap(context, balancePro),
             ],
           ),
         );
@@ -198,6 +151,99 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
     //     ),
     //   ),
     // );
+  }
+
+  Widget toSwap(BuildContext context, Balanceprovider balancePro) {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.5),
+        ),
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: Text(balancePro.fromBalance.toString()),
+          ),
+          DropdownButton(
+              value: balancePro.to,
+              style: const TextStyle(color: Colors.white),
+              underline: const SizedBox(),
+              hint: const Text(
+                'Select coin',
+                style: TextStyle(color: Colors.black),
+              ),
+              items: balancePro.toWallets
+                  .map((WalletBalnce coin) => DropdownMenuItem<WalletBalnce>(
+                        value: coin,
+                        child: Text(
+                          coin.name.toUpperCase(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ))
+                  .toList(),
+              onChanged: (WalletBalnce? value) {})
+        ],
+      ),
+    );
+  }
+
+  Widget fromSwap(BuildContext context, Balanceprovider balancePro) {
+    return Container(
+      height: 70,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Theme.of(context).textTheme.bodyText1!.color!.withOpacity(0.5),
+        ),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+              child: TextField(
+            decoration: InputDecoration(
+              hintText: balancePro.fromBalance.toString(),
+              prefix: Text('\$'),
+              border: InputBorder.none,
+            ),
+            //controller: balancePro.fromController,
+            onChanged: (String value) {
+              if (value.isEmpty) {
+                balancePro.fromBalanceValidator(0);
+              } else {
+                double tempvalue = double.parse(value);
+                balancePro.fromBalanceValidator(tempvalue);
+              }
+            },
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          )),
+          DropdownButton(
+              value: balancePro.from,
+              style: const TextStyle(color: Colors.white),
+              underline: const SizedBox(),
+              hint: const Text(
+                'Select coin',
+                style: TextStyle(color: Colors.black),
+              ),
+              items: balancePro.wallet
+                  .map((WalletBalnce coin) => DropdownMenuItem<WalletBalnce>(
+                        value: coin,
+                        child: Text(
+                          coin.name.toUpperCase(),
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ))
+                  .toList(),
+              onChanged: (WalletBalnce? value) =>
+                  balancePro.formValueChange(value!))
+        ],
+      ),
+    );
   }
 }
 

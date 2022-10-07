@@ -77,18 +77,39 @@ class Balanceprovider with ChangeNotifier {
   TextEditingController get fromController => _fromController;
   TextEditingController get toController => _toController;
   WalletBalnce get from => _from!;
-  double fromBalance = 0;
+  WalletBalnce get to => _to!;
+  double _fromBalance = 0;
   double tobalance = 0;
+  double get fromBalance => _fromBalance;
+  List<WalletBalnce> toWallets = <WalletBalnce>[];
   firstInit() {
     _from = wallet[0];
     _to = wallet[1];
+    for (int i = 1; i < 4; i++) {
+      toWallets.add(wallet[i]);
+    }
   }
 
   formValueChange(WalletBalnce value) {
+    int j = 0;
     for (int i = 0; i < 4; i++) {
       if (value == wallet[i]) {
         _from = value;
+        _to = toWallets[j];
+      } else {
+        toWallets[j] = wallet[i];
+        j++;
       }
+    }
+    notifyListeners();
+  }
+
+  fromBalanceValidator(double value) {
+    if (value < from.usdtPrice) {
+      _fromBalance = value;
+    } else {
+      CustomToast.errorToast(message: 'value greater the avaliable balance');
+      _fromBalance = 0;
     }
     notifyListeners();
   }

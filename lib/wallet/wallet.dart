@@ -90,7 +90,7 @@ class WallletWithApi {
   // ignore: always_specify_types
   Future<double> getWalletBalance(String walletIds) async {
     double temp = 0;  
-      try {
+     try {
         await http
             .get(
                 Uri.parse(
@@ -114,7 +114,7 @@ class WallletWithApi {
       }
     return temp;
     }
-   
+    
   
 
   Future<CoinsWallet?> createETherumWallet() async {
