@@ -11,7 +11,7 @@ class AuthApi {
     required String password,
   }) async {
     try {
-      print('Enter the Auth method');
+      print('Enter the Auth');
       UserCredential cer = await _auth.createUserWithEmailAndPassword(
           email: email.toLowerCase().trim(), password: password);
       print(cer.user!.uid);
