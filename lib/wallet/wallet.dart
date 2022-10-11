@@ -89,33 +89,30 @@ class WallletWithApi {
   @override
   // ignore: always_specify_types
   Future<double> getWalletBalance(String walletIds) async {
-    double temp = 0;  
-     try {
-        await http
-            .get(
-                Uri.parse(
-                  '$url/$walletIds/balance',
-                ),
-                headers: requestHeaders)
-            .then((http.Response value) {
-          if (value.statusCode == 200) {
-            var body = jsonDecode(value.body);
-     // print('body $body');
-            double available = ((body['available']) / 100000000.00);
-            double total = ((body['total']) / 100000000.00);
-             temp=total;
-           
-          }
-        }).timeout(
-          const Duration(seconds: 30),
-        );
-      } catch (e) {
-        print(e);
-      }
-    return temp;
+    double temp = 0;
+    try {
+      await http
+          .get(
+              Uri.parse(
+                '$url/$walletIds/balance',
+              ),
+              headers: requestHeaders)
+          .then((http.Response value) {
+        if (value.statusCode == 200) {
+          var body = jsonDecode(value.body);
+          // print('body $body');
+          double available = ((body['available']) / 100000000.00);
+          double total = ((body['total']) / 100000000.00);
+          temp = total;
+        }
+      }).timeout(
+        const Duration(seconds: 30),
+      );
+    } catch (e) {
+      print(e);
     }
-    
-  
+    return temp;
+  }
 
   Future<CoinsWallet?> createETherumWallet() async {
     try {
