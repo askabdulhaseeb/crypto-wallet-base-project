@@ -10,8 +10,10 @@ import '../../models/seed_string.dart';
 import '../../models/wallets/coin_wallet.dart';
 import '../../models/wallets/wallets.dart';
 import '../../providers/seed_phrase_provider.dart';
+import '../../providers/wallet_provider.dart';
 import '../../screens/auth/welcome_screen.dart';
 import '../../screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
+import '../../utilities/local_data.dart';
 import '../../utilities/utilities.dart';
 import '../../wallet/wallet.dart';
 import '../custom_widgets/custom_elevated_button.dart';
@@ -29,8 +31,9 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
   String _second = '';
   String _third = '';
   int count = 0;
-  final String uuid = const Uuid().v4();
+  final String uuied = const Uuid().v4();
   uploaddata(String seed) async {
+    String uuid = const Uuid().v4();
     final SeedString user =
         SeedString(seedphrase: seed, userid: AuthApi.uid!, seedid: uuid);
     bool temp = await SeedPhraseApi().add(user);
@@ -47,7 +50,9 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
         walletId: TimeStamp.timestamp.toString(),
       );
       bool temp1 = await WalletsApi().add(wallets);
+      await LocalData.setSeedPhrase(uuid);
       if (temp1) {
+        await Provider.of<WalletProvider>(context).load(uuid);
         Navigator.of(context).pushNamedAndRemoveUntil(
             WelcomeScreen.routeName, (Route<dynamic> route) => false);
       }

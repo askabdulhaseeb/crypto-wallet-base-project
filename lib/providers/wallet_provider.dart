@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../apis/wallet_api.dart';
 import '../models/wallets/wallets.dart';
+import '../utilities/local_data.dart';
 
 class WalletProvider with ChangeNotifier {
   WalletProvider() {
-    load('afb08c4e-584b-46bd-a309-e94f31fda982');
+    print('LocalData.getSeedPhrase');
+    print(LocalData.getSeedPhrase);
+    load(LocalData.getSeedPhrase);
   }
   List<Wallets> _wallets = <Wallets>[];
   List<Wallets> get wallets => _wallets;

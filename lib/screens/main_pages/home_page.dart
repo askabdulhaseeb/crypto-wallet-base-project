@@ -9,6 +9,7 @@ import '../../providers/wallet_provider.dart';
 import '../../widget/coin_list_view.dart';
 import '../../widget/custom_widgets/circular_profile_image.dart';
 import '../../widget/home/total_balance_widget.dart';
+import '../bitcoin_transaction/tabbar.dart';
 import '../see_all_coin_screen/see_all_coin_screen.dart';
 import '../tranfer_screens/receive_btc_screen.dart';
 
@@ -63,8 +64,9 @@ class _HomePageState extends State<HomePage> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute<ReceiveBTCScreen>(
-                builder: (BuildContext context) => const ReceiveBTCScreen(),
+
+              Navigator.of(context).push(MaterialPageRoute<Tabbarview>(
+                builder: (BuildContext context) => const Tabbarview(),
               ));
             },
             splashRadius: 20,

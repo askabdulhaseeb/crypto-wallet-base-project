@@ -8,36 +8,42 @@ import 'dart:convert';
 import 'dart:developer';
 
 class Balanceprovider with ChangeNotifier {
-  double totalBalnce = 890;
+  double totalBalnce = 0;
 
   double get total => totalBalnce;
   List<WalletBalnce> _wallet = <WalletBalnce>[];
   List<WalletBalnce> get wallet => _wallet;
-  void refresh(CoinProvider coinPro, WalletProvider walletPro) {
+  Future<void> refresh(CoinProvider coinPro, WalletProvider walletPro) async {
     if (walletPro.wallets.length == 1 && coinPro.coins.length == 50) {
-      updateYourCoin(walletPro, coinPro);
+      await updateYourCoin(walletPro, coinPro);
       firstInit();
     }
     notifyListeners();
   }
 
-  updateYourCoin(WalletProvider walletProvider, CoinProvider coinPro) async {
+  Future<void> updateYourCoin(
+      WalletProvider walletProvider, CoinProvider coinPro) async {
     wallet.clear();
     List<int> temp = coinApiIndex(coinPro);
+    print('INDEX: $temp');
     for (int i = 0; i < 4; i++) {
+      print(walletProvider.wallets[0].coinsWallet[i].address);
       print(coinPro.coins[temp[i]].name);
+      double tempamount = await WallletWithApi()
+          .getWalletBalance(walletProvider.wallets[0].coinsWallet[i].address);
+      log(tempamount.toString());
       WalletBalnce walletbal = WalletBalnce(
         name: coinPro.coins[temp[i]].name,
-        // totalcoin: await WallletWithApi().getWalletBalance(
-        //   walletProvider.wallets[0].coinsWallet[0].address),
-        totalcoin: 1,
+        totalcoin: tempamount,
+        //totalcoin: 1,
         address: walletProvider.wallets[0].coinsWallet[i].address,
         transferkey: walletProvider.wallets[0].coinsWallet[i].transferKey,
         wallet: walletProvider.wallets[0].coinsWallet[i].wallet,
         coinImage: coinPro.coins[temp[i]].imageurl,
         price: coinPro.coins[temp[i]].price,
-        usdtPrice: 1 * coinPro.coins[temp[i]].price,
+        usdtPrice: tempamount * coinPro.coins[temp[i]].price,
       );
+
       _wallet.add(walletbal);
     }
     totalBalanceShow();
@@ -93,14 +99,18 @@ class Balanceprovider with ChangeNotifier {
   formValueChange(WalletBalnce value) {
     int j = 0;
     for (int i = 0; i < 4; i++) {
+      print('Value : ${value.name}');
+
       if (value == wallet[i]) {
         _from = value;
-        _to = toWallets[j];
+        //_to = toWallets[j];
       } else {
         toWallets[j] = wallet[i];
         j++;
       }
     }
+    _to = toWallets[0];
+    print('to value : ${_to!.name}');
     notifyListeners();
   }
 

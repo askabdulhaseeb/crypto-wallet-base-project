@@ -6,6 +6,7 @@ import '../../models/wallets/balance.dart';
 import '../../providers/balance_provider.dart';
 import '../../providers/exchange_provider.dart';
 import '../../utilities/app_images.dart';
+import '../../wallet/wallet.dart';
 import '../../widget/coin/coin_textformfield.dart';
 import '../../widget/custom_widgets/custom_elevated_button.dart';
 import '../../widget/custom_widgets/custom_toast.dart';
@@ -45,6 +46,15 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
               const _DividerWidger(),
               const SizedBox(height: 10),
               toSwap(context, balancePro),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                  onPressed: () async {
+                    String walletID = 'btc-c1a3ac7c1c1fed3ea8b76b95005c295f';
+                    double balance =
+                        await WallletWithApi().getWalletBalance(walletID);
+                    print('Balance : $balance');
+                  },
+                  child: const Text('Transfer'))
             ],
           ),
         );

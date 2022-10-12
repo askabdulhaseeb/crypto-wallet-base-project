@@ -27,11 +27,13 @@ import 'screens/wallet_screens/create_wallet_screen/create_wallet_screen.dart';
 import 'screens/wallet_screens/import_seed_screen/import_seed_screen.dart';
 import 'screens/wallet_screens/wallet_created_success_screen/wallat_create_success_screen.dart';
 import 'screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
+import 'utilities/local_data.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await dotenv.load(fileName: '.env');
+  await LocalData.init();
   runApp(const MyApp());
 }
 

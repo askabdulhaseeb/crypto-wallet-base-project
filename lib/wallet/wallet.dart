@@ -143,4 +143,65 @@ class WallletWithApi {
     }
     return result;
   }
+
+  String TRANSFERKEY = 'transfer_key';
+  String DESTINATIONS = 'destinations';
+  String ADDRESS = 'address';
+  String AMOUNT = 'amount';
+  String STATUS = 'status';
+  String HASH = 'hash';
+  Future<Map> transferCoin(
+    String walletId,
+    String transferKey,
+    String address,
+    String amount,
+  ) async {
+    Map result;
+
+    Map<String, dynamic> trxnBody = {
+      TRANSFERKEY: transferKey,
+      DESTINATIONS: [
+        {
+          ADDRESS: address,
+          AMOUNT: (double.tryParse(amount)! * 100000000).toInt()
+        },
+      ],
+    };
+    try {
+      http.Response response = await http
+          .post(Uri.parse('$url/$walletId/transfer'),
+              headers: requestHeaders, body: jsonEncode(trxnBody))
+          .timeout(
+            const Duration(seconds: 30),
+          );
+
+      var body = jsonDecode(response.body);
+      int status = response.statusCode;
+      var txs = body['txs'];
+
+      if (status == 200) {
+        result = {
+          STATUS: true,
+          HASH: txs,
+        };
+
+        return result;
+      } else {
+        result = {
+          STATUS: false,
+          HASH: null,
+        };
+
+        return result;
+      }
+    } catch (e) {
+      print(e);
+      result = {
+        STATUS: false,
+        HASH: null,
+      };
+
+      return result;
+    }
+  }
 }
