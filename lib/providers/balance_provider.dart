@@ -12,7 +12,7 @@ class Balanceprovider with ChangeNotifier {
   double totalBalnce = 0;
 
   double get total => totalBalnce;
-  List<WalletBalnce> _wallet = <WalletBalnce>[];
+  final List<WalletBalnce> _wallet = <WalletBalnce>[];
   List<WalletBalnce> get wallet => _wallet;
   Future<void> refresh(CoinProvider coinPro, WalletProvider walletPro) async {
     if (walletPro.wallets.length == 1 && coinPro.coins.length > 1) {

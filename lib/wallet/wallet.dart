@@ -125,8 +125,8 @@ class WallletWithApi {
       CoinsWallet coinInfo = CoinsWallet(
         symble: 'eth',
         address: add,
-        transferKey: privateKey,
-        wallet: '',
+        transferKey:'    ',
+        wallet: privateKey,
       );
       return coinInfo;
     } catch (e) {
