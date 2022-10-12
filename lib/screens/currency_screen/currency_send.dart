@@ -27,7 +27,7 @@ class CurrencySendScreen extends StatelessWidget {
         CustomToast.errorToast(message: 'You havenot Entered Balance ');
       } else if (balance > amount) {
         await WallletWithApi().transferCoin(
-            walletBalnc.address,
+            walletBalnc.wallet,
             // walletPro.walletsAddress,
             walletBalnc.transferkey,
             //walletPro.transferKey,

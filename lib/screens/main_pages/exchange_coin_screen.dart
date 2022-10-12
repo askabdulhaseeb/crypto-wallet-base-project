@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +23,29 @@ class ExchangeCoinScreen extends StatefulWidget {
 class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   bool isLoading = false;
+  transferCoin() async {
+    Balanceprovider balPro =
+        Provider.of<Balanceprovider>(context, listen: false);
+    if (kDebugMode) {
+      print(balPro.fromBalance);
+      print(balPro.from.wallet);
+      print(balPro.from.transferkey);
+      print(balPro.to.address);
+    }
+    if (balPro.from.usdtPrice >= balPro.fromBalance) {
+      if (balPro.fromBalance == 0) {
+        CustomToast.errorToast(message: 'invalid Amount');
+      } else {
+        await WallletWithApi().transferCoin(
+            balPro.from.wallet,
+            balPro.from.transferkey,
+            balPro.to.address,
+            balPro.fromBalance.toString());
+      }
+    } else {
+      CustomToast.errorToast(message: 'invalid Amount');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +73,7 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                   onPressed: () async {
-                    String walletID = 'btc-c1a3ac7c1c1fed3ea8b76b95005c295f';
-                    double balance =
-                        await WallletWithApi().getWalletBalance(walletID);
-                    print('Balance : $balance');
+                    transferCoin();
                   },
                   child: const Text('Transfer'))
             ],
@@ -197,7 +218,9 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                         ),
                       ))
                   .toList(),
-              onChanged: (WalletBalnce? value) {})
+              onChanged: (WalletBalnce? value) {
+                balancePro.toValueChange(value!);
+              })
         ],
       ),
     );

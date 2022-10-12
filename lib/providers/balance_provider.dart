@@ -124,6 +124,17 @@ class Balanceprovider with ChangeNotifier {
     notifyListeners();
   }
 
+  toValueChange(WalletBalnce value) {
+    for (int i = 0; i < 4; i++) {
+      if (value == wallet[i]) {
+        _to = value;
+        //_to = toWallets[j];
+      }
+    }
+
+    notifyListeners();
+  }
+
   fromBalanceValidator(double value) {
     if (value < from.usdtPrice) {
       _fromBalance = value;
