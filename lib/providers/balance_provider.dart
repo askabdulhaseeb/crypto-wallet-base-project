@@ -125,8 +125,8 @@ class Balanceprovider with ChangeNotifier {
   }
 
   toValueChange(WalletBalnce value) {
-    for (int i = 0; i < 4; i++) {
-      if (value == wallet[i]) {
+    for (int i = 0; i < toWallets.length; i++) {
+      if (value == toWallets[i]) {
         _to = value;
         //_to = toWallets[j];
       }
