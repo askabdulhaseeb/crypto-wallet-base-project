@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../models/coin_model.dart';
 import '../models/wallets/balance.dart';
 import '../wallet/wallet.dart';
 import '../widget/custom_widgets/custom_toast.dart';
@@ -14,7 +15,7 @@ class Balanceprovider with ChangeNotifier {
   List<WalletBalnce> _wallet = <WalletBalnce>[];
   List<WalletBalnce> get wallet => _wallet;
   Future<void> refresh(CoinProvider coinPro, WalletProvider walletPro) async {
-    if (walletPro.wallets.length == 1 && coinPro.coins.length == 50) {
+    if (walletPro.wallets.length == 1 && coinPro.coins.length > 1) {
       await updateYourCoin(walletPro, coinPro);
       firstInit();
     }
@@ -25,13 +26,13 @@ class Balanceprovider with ChangeNotifier {
       WalletProvider walletProvider, CoinProvider coinPro) async {
     wallet.clear();
     List<int> temp = coinApiIndex(coinPro);
-    print('INDEX: $temp');
+    //print('INDEX: $temp');
     for (int i = 0; i < 4; i++) {
-      print(walletProvider.wallets[0].coinsWallet[i].address);
-      print(coinPro.coins[temp[i]].name);
+      //print(walletProvider.wallets[0].coinsWallet[i].address);
+      //print(coinPro.coins[temp[i]].name);
       double tempamount = await WallletWithApi()
           .getWalletBalance(walletProvider.wallets[0].coinsWallet[i].address);
-      log(tempamount.toString());
+      // log(tempamount.toString());
       WalletBalnce walletbal = WalletBalnce(
         name: coinPro.coins[temp[i]].name,
         totalcoin: tempamount,
@@ -49,20 +50,27 @@ class Balanceprovider with ChangeNotifier {
     totalBalanceShow();
   }
 
+  List<CoinData> _someCoins = <CoinData>[];
+  List<CoinData> get someCoins => _someCoins;
   List<int> coinApiIndex(CoinProvider coinPro) {
+    someCoins.clear();
     List<int> temp = <int>[];
     for (int i = 0; i < 50; i++) {
       if (coinPro.coins[i].symbol == 'btc') {
         temp.add(i);
+        _someCoins.add(coinPro.coins[i]);
       }
       if (coinPro.coins[i].symbol == 'doge') {
         temp.add(i);
+        _someCoins.add(coinPro.coins[i]);
       }
       if (coinPro.coins[i].symbol == 'bch') {
         temp.add(i);
+        _someCoins.add(coinPro.coins[i]);
       }
       if (coinPro.coins[i].symbol == 'ltc') {
         temp.add(i);
+        _someCoins.add(coinPro.coins[i]);
       }
     }
     return temp;

@@ -9,8 +9,11 @@ class CoinProvider with ChangeNotifier {
   }
   List<CoinData> _coins = <CoinData>[];
   List<CoinData> get coins => _coins;
-  getAllCoins() async {
+  Future<void> getAllCoins() async {
     _coins = await CoinGeckoApi().getPrice();
+  
     notifyListeners();
   }
+
+  
 }
