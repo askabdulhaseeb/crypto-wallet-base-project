@@ -97,16 +97,22 @@ class CurrencyFullScreen extends StatelessWidget {
                 SizedBox(
                     width: 150,
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text('Recieve'))),
+                        onPressed: () {},
+                        child: const Text(
+                          'Recieve',
+                          style: TextStyle(color: Colors.white),
+                        ))),
                 SizedBox(
                     width: 150,
                     child: ElevatedButton(
-                        onPressed: () {}, child: const Text('Send'))),
+                        onPressed: () {},
+                        child: const Text(
+                          'Send',
+                          style: TextStyle(color: Colors.white),
+                        ))),
               ],
             ),
-            SizedBox(
-              height: 50,
-            )
+            const SizedBox(height: 50)
           ],
         ),
       ),
