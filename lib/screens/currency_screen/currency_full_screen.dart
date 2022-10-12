@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../models/coin_model.dart';
 import '../../models/wallets/balance.dart';
 import 'currency_recieve.dart';
+import 'currency_send.dart';
 
 class CurrencyFullScreen extends StatelessWidget {
   final CoinData coinData;
@@ -115,7 +116,16 @@ class CurrencyFullScreen extends StatelessWidget {
                 SizedBox(
                     width: 150,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>CurrencySendScreen(
+                                  coinData: coinData,
+                                  walletBalnce: walletBalnce),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'Send',
                           style: TextStyle(color: Colors.white),
