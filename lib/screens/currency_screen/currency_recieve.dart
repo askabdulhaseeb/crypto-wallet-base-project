@@ -1,3 +1,5 @@
+// ignore_for_file: always_put_required_named_parameters_first
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -7,10 +9,10 @@ import '../../models/wallets/balance.dart';
 import '../../wallet/wallet.dart';
 
 class CurrencyRecieveScreen extends StatelessWidget {
-  final CoinData coinData;
-  final WalletBalnce walletBalnce;
   const CurrencyRecieveScreen(
       {super.key, required this.coinData, required this.walletBalnce});
+  final CoinData coinData;
+  final WalletBalnce walletBalnce;
 
   @override
   Widget build(BuildContext context) {
