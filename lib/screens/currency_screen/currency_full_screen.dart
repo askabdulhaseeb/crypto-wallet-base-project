@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../models/coin_model.dart';
 import '../../models/wallets/balance.dart';
+import 'currency_recieve.dart';
 
 class CurrencyFullScreen extends StatelessWidget {
   final CoinData coinData;
@@ -97,7 +98,16 @@ class CurrencyFullScreen extends StatelessWidget {
                 SizedBox(
                     width: 150,
                     child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CurrencyRecieveScreen(
+                                  coinData: coinData,
+                                  walletBalnce: walletBalnce),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'Recieve',
                           style: TextStyle(color: Colors.white),
