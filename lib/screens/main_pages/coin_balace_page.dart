@@ -93,7 +93,8 @@ class CoinScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 children: <Widget>[
-                                  Text('\$${balancePro.wallet[index].price}'),
+                                  Text(
+                                      '\$${balancePro.wallet[index].usdtPrice}'),
                                   Text(balancePro.wallet[index].totalcoin
                                       .toString()),
                                 ],

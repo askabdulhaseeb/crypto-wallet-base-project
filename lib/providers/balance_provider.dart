@@ -68,6 +68,8 @@ class Balanceprovider with ChangeNotifier {
         temp.add(i);
         _someCoins.add(coinPro.coins[i]);
       }
+    }
+    for (int i = 0; i < 50; i++) {
       if (coinPro.coins[i].symbol == 'ltc') {
         temp.add(i);
         _someCoins.add(coinPro.coins[i]);
