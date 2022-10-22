@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import '../../widget/copyright.dart';
 import '../wallet_screens/wallet_setup_screen/wallet_setup_screen.dart';
 
 class VerificationPinScreen extends StatefulWidget {
@@ -67,6 +68,8 @@ class _VerificationPinScreenState extends State<VerificationPinScreen> {
                   child: const Text('Resend Code'),
                   onPressed: () {},
                 ),
+          const Copyrights(),
+
               ],
             ),
           ),

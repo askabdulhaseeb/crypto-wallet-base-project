@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../providers/user_provider.dart';
 import '../../utilities/app_images.dart';
+import '../../widget/copyright.dart';
 import '../../widget/custom_widgets/custom_elevated_button.dart';
 import '../main_screen/main_screen.dart';
 
@@ -53,6 +54,8 @@ class WelcomeScreen extends StatelessWidget {
               onTap: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   MainScreen.routeName, (Route<dynamic> route) => false),
             ),
+            const Spacer(),
+          const Copyrights(),
           ],
         ),
       ),

@@ -8,6 +8,7 @@ import '../../utilities/app_images.dart';
 import '../../utilities/custom_validators.dart';
 import '../../widget/auth/auth_icon_button.dart';
 import '../../widget/auth/on_continue_with_text_widget.dart';
+import '../../widget/copyright.dart';
 import '../../widget/custom_widgets/custom_elevated_button.dart';
 import '../../widget/custom_widgets/custom_textformfield.dart';
 import '../../widget/custom_widgets/hideable_textformfield.dart';
@@ -108,21 +109,22 @@ class _Footer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           const OrContinueWithTextWidget(),
-          Row(
-            children: <Widget>[
-              AuthIconButton(
-                imagePath: AppImages.google,
-                onTap: () {},
-              ),
-              AuthIconButton(
-                icon: Icons.apple,
-                onTap: () {},
-              ),
-            ],
-          ),
+          // Row(
+          //   children: <Widget>[
+          //     AuthIconButton(
+          //       imagePath: AppImages.google,
+          //       onTap: () {},
+          //     ),
+          //     AuthIconButton(
+          //       icon: Icons.apple,
+          //       onTap: () {},
+          //     ),
+          //   ],
+          // ),
+          const SizedBox(height: 30),
           Center(
             child: RichText(
               text: TextSpan(
@@ -146,7 +148,8 @@ class _Footer extends StatelessWidget {
               ),
             ),
           ),
-          
+          const SizedBox(height: 10),
+          const Copyrights(),
         ],
       ),
     );

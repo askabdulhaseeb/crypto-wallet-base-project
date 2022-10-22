@@ -2,8 +2,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Credits extends StatelessWidget {
-  const Credits({super.key});
+class Copyrights extends StatelessWidget {
+  const Copyrights({super.key});
 
   @override
   Widget build(BuildContext context) {

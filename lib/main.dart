@@ -77,7 +77,7 @@ class MyApp extends StatelessWidget {
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
           //home: const MainScreen(),
-          home: AuthApi.uid != null ? const MainScreen() : const IntroScreen(),
+          home: AuthApi.uid != null ? const MainScreen() : const SigninScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),
