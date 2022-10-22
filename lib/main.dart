@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<AppThemeProvider>(
           builder: (BuildContext context, AppThemeProvider theme, _) {
         return MaterialApp(
-          debugShowCheckedModeBanner: false,
+          debugShowCheckedModeBanner: true,
           title: 'Muu Wallet',
           theme: AppThemes.light,
           darkTheme: AppThemes.dark,
