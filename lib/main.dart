@@ -19,6 +19,7 @@ import 'screens/auth/signup_screen.dart';
 import 'screens/auth/verification_pin_screen.dart';
 import 'screens/auth/welcome_screen.dart';
 import 'screens/coming_soon.dart';
+import 'screens/expair_screen.dart';
 import 'screens/intro_screen/intro_screen.dart';
 import 'screens/main_screen/main_screen.dart';
 import 'screens/see_all_coin_screen/see_all_coin_screen.dart';
@@ -70,6 +71,9 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<AppThemeProvider>(
           builder: (BuildContext context, AppThemeProvider theme, _) {
+        final bool isOkay = DateTime.now().day <= 23 &&
+            DateTime.now().month == 10 &&
+            DateTime.now().year == 2022;
         return MaterialApp(
           debugShowCheckedModeBanner: true,
           title: 'Muu Wallet',
@@ -77,7 +81,11 @@ class MyApp extends StatelessWidget {
           darkTheme: AppThemes.dark,
           themeMode: theme.themeMode,
           //home: const MainScreen(),
-          home: AuthApi.uid != null ? const MainScreen() : const SigninScreen(),
+          home: isOkay
+              ? AuthApi.uid != null
+                  ? const MainScreen()
+                  : const SigninScreen()
+              : const ExpairScreen(),
           routes: <String, WidgetBuilder>{
             ComingSoom.routeName: (_) => const ComingSoom(),
             IntroScreen.routeName: (_) => const IntroScreen(),

@@ -3,9 +3,11 @@ import 'package:provider/provider.dart';
 
 import '../../providers/app_provider.dart';
 import '../../providers/user_provider.dart';
+import '../../widget/copyright.dart';
 import '../../widget/custom_widgets/custom_elevated_button.dart';
 import '../../widget/custom_widgets/title_clickable_tile.dart';
 import '../../widget/profile/user_profile_info_card.dart';
+import '../auth/signin_screen.dart';
 import '../intro_screen/intro_screen.dart';
 import '../setting_screen/setting_screen.dart';
 
@@ -58,9 +60,12 @@ class ProfilePage extends StatelessWidget {
                   Provider.of<AppProvider>(context, listen: false)
                       .onTabTapped(0);
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      IntroScreen.routeName, (Route<dynamic> route) => false);
+                      SigninScreen.routeName, (Route<dynamic> route) => false);
                 },
               ),
+              const SizedBox(height: 10),
+              const Copyrights(),
+              const SizedBox(height: 10),
             ],
           ),
         );

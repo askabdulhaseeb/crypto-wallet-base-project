@@ -8,6 +8,7 @@ import '../../../providers/coin_provider.dart';
 import '../../../providers/seed_provider.dart';
 import '../../../providers/wallet_provider.dart';
 import '../../../utilities/local_data.dart';
+import '../../../widget/copyright.dart';
 import '../../../widget/custom_widgets/custom_elevated_button.dart';
 import '../../../widget/custom_widgets/custom_toast.dart';
 import '../../../widget/custom_widgets/hideable_textformfield.dart';
@@ -162,6 +163,8 @@ class _ImportSeedScreenState extends State<ImportSeedScreen> {
                             }
                           },
                         ),
+                  const SizedBox(height: 10),
+                  const Center(child: Copyrights()),
                 ],
               ),
             ),

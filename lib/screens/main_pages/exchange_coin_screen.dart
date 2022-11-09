@@ -9,6 +9,7 @@ import '../../providers/exchange_provider.dart';
 import '../../utilities/app_images.dart';
 import '../../wallet/wallet.dart';
 import '../../widget/coin/coin_textformfield.dart';
+import '../../widget/copyright.dart';
 import '../../widget/custom_widgets/custom_elevated_button.dart';
 import '../../widget/custom_widgets/custom_toast.dart';
 import '../../widget/custom_widgets/show_loading.dart';
@@ -75,13 +76,16 @@ class _ExchangeCoinScreenState extends State<ExchangeCoinScreen> {
                   onPressed: () async {
                     transferCoin();
                   },
-                  child: const Text('Transfer'))
+                  child: const Text('Transfer')),
+              const Spacer(),
+              const SizedBox(height: 10),
+              const Copyrights(),
+              const SizedBox(height: 10),
             ],
           ),
         );
       }),
     );
-
   }
 
   Widget toSwap(BuildContext context, Balanceprovider balancePro) {

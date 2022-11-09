@@ -16,6 +16,7 @@ import '../../screens/wallet_screens/wallet_setup_screen/wallet_setup_screen.dar
 import '../../utilities/local_data.dart';
 import '../../utilities/utilities.dart';
 import '../../wallet/wallet.dart';
+import '../copyright.dart';
 import '../custom_widgets/custom_elevated_button.dart';
 import '../custom_widgets/custom_toast.dart';
 import '../custom_widgets/gradient_text_widget.dart';
@@ -52,7 +53,7 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
       bool temp1 = await WalletsApi().add(wallets);
       await LocalData.setSeedPhrase(uuid);
       if (temp1) {
-        await Provider.of<WalletProvider>(context).load(uuid);
+        await Provider.of<WalletProvider>(context, listen: false).load(uuid);
         Navigator.of(context).pushNamedAndRemoveUntil(
             WelcomeScreen.routeName, (Route<dynamic> route) => false);
       }
@@ -216,6 +217,7 @@ class _ConfirmSeedStepState extends State<ConfirmSeedStep> {
               }
             },
           ),
+          const Copyrights(),
         ],
       );
     });

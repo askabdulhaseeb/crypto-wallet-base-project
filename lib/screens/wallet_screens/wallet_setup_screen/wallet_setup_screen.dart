@@ -6,6 +6,7 @@ import '../../../apis/auth_api.dart';
 import '../../../apis/login_api.dart';
 import '../../../providers/seed_phrase_provider.dart';
 import '../../../providers/seed_provider.dart';
+import '../../../widget/copyright.dart';
 import '../../../widget/custom_widgets/custom_elevated_button.dart';
 import '../create_wallet_screen/create_wallet_screen.dart';
 import '../import_seed_screen/import_seed_screen.dart';
@@ -78,6 +79,8 @@ class _WalletSetupScreenState extends State<WalletSetupScreen> {
                         .pushNamed(CreateWalletScreen.routeName);
                   },
                 ),
+                const SizedBox(height: 10),
+                const Copyrights(),
               ],
             ),
           ),
